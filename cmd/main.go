@@ -6,11 +6,11 @@ import (
 )
 
 func main() {
-	config := ServerAPI.NewConfig()
 
+	config := ServerAPI.NewConfig()
 	s := ServerAPI.New(config)
+
 	if err := s.Start(); err != nil {
 		log.Fatal(err)
 	}
-
 }
