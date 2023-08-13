@@ -1,4 +1,4 @@
-package Repositories
+package reps
 
 import (
 	"ShopRestAPI/internal/Storage/models"
@@ -13,16 +13,15 @@ func NewProductRep(db *sql.DB) *ProductRep {
 	return &ProductRep{db: db}
 }
 
-func (r *ProductRep) Create(p *models.Product) (*models.Product, error) {
+func (r *ProductRep) Create(p *models.Product) error {
 	if err := r.db.QueryRow(
 		"INSERT INTO products (name, amount, description, type_id, photos_id, price) "+
 			"VALUES ($1, $2, $3, $4, $5, $6) RETURNING goods_id",
-		p.Name, p.Amount, p.Description,
-		p.TypeId, p.PhotosId, p.Price,
+		p.Name, p.Amount, p.Description, p.TypeId, p.PhotosId, p.Price,
 	).Scan(&p.ID); err != nil {
-		return nil, err
+		return err
 	}
-	return p, nil
+	return nil
 }
 
 func (r *ProductRep) Find(id int) (*models.Product, error) {

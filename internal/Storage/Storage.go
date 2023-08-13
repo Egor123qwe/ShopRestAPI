@@ -1,26 +1,26 @@
 package Storage
 
 import (
-	"ShopRestAPI/internal/Storage/Repositories"
 	"ShopRestAPI/internal/Storage/migrations"
 	"database/sql"
 	_ "github.com/lib/pq"
 )
 
 type Store struct {
-	config     *Config
-	db         *sql.DB
-	ProductRep *Repositories.ProductRep
+	db     *sql.DB
+	config *Config
+	Reps   *Reps
 }
 
 func New(config *Config) *Store {
 	return &Store{
 		config: config,
+		Reps:   new(Reps),
 	}
 }
 
 func (s *Store) Open() error {
-	db, err := sql.Open("postgres", s.config.dbURL)
+	db, err := sql.Open(s.config.dbDriver, s.config.dbURL)
 	if err != nil {
 		return err
 	}
@@ -29,20 +29,11 @@ func (s *Store) Open() error {
 	}
 	s.db = db
 
-	migrations.CreateTables(s.db) //////////
+	migrations.CreateTables(s.db) //////////DELETE
 
 	return nil
 }
 
 func (s *Store) Close() {
 	s.db.Close()
-}
-
-func (s *Store) Product() *Repositories.ProductRep {
-	if s.ProductRep != nil {
-		return s.ProductRep
-	}
-
-	s.ProductRep = Repositories.NewProductRep(s.db)
-	return s.ProductRep
 }
