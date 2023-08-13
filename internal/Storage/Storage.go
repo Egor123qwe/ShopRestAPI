@@ -1,7 +1,6 @@
 package Storage
 
 import (
-	"ShopRestAPI/internal/Storage/migrations"
 	"database/sql"
 	_ "github.com/lib/pq"
 )
@@ -28,8 +27,6 @@ func (s *Store) Open() error {
 		return err
 	}
 	s.db = db
-
-	migrations.CreateTables(s.db) //////////DELETE
 
 	return nil
 }
