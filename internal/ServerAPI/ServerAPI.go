@@ -26,19 +26,34 @@ func (s *ServerApi) Start() error {
 	}
 
 	//Тест
-	m := &models.Product{
-		ID:          1,
-		Name:        "dick",
-		Amount:      777,
-		Description: "трусы топ",
-		TypeId:      1,
-		PhotosId:    2,
-		Price:       3.3,
+	props := []models.Property{
+		{
+			Color:  "Black",
+			Photos: "src/chlen",
+			Size:   "M",
+			Amount: 2,
+		},
 	}
 
-	s.store.Product().Create(m)
-	fmt.Println(s.store.Product().Find(1))
+	product := &models.Product{
+		Name:        "super SweetShot",
+		Price:       49.99,
+		Description: "Nice SweetShot!",
+		Print:       "Penis",
+		Types:       "SweetShot",
+		Style:       "gangsta",
+		Season:      "summer",
+		Country:     "USA",
+		Properties:  &props,
+	}
 
+	if err := s.store.Product().Create(product); err != nil {
+		log.Fatal(err)
+	}
+	//s.store.Product().Delete(22)
+	product, _ = s.store.Product().Get(1)
+	fmt.Println(product)
+	fmt.Println(product.Properties)
 	return nil
 }
 
