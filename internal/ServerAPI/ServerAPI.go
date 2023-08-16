@@ -34,7 +34,7 @@ func (s *ServerApi) Start() error {
 		Term:     "",
 		MinPrice: 0,
 		MaxPrice: 0,
-		Print:    []string{},
+		Print:    []string{""},
 		Types:    []string{},
 		Style:    []string{},
 		Season:   []string{},
