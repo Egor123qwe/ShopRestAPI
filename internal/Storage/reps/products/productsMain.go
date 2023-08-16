@@ -71,6 +71,7 @@ func (r *ProductRep) Get(id int) (*models.Product, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	defer rows.Close()
 	for rows.Next() {
 		prop := models.Property{}
