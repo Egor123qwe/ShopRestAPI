@@ -25,35 +25,26 @@ func (s *ServerApi) Start() error {
 		log.Fatal(err)
 	}
 
+	//s.configureRoutes()
+
 	//Тест
-	props := []models.Property{
-		{
-			Color:  "Black",
-			Photos: "src/chlen",
-			Size:   "M",
-			Amount: 2,
-		},
-	}
+	s.store.Product().GetPropertyList("color")
 
-	product := &models.Product{
-		Name:        "super SweetShot",
-		Price:       49.99,
-		Description: "Nice SweetShot!",
-		Print:       "Penis",
-		Types:       "SweetShot",
-		Style:       "gangsta",
-		Season:      "summer",
-		Country:     "USA",
-		Properties:  &props,
+	var filter = &models.ProductFilter{
+		Term:     "",
+		MinPrice: 0,
+		MaxPrice: 0,
+		Print:    []string{},
+		Types:    []string{},
+		Style:    []string{},
+		Season:   []string{},
+		Country:  []string{},
+		Color:    []string{},
+		Size:     []string{},
 	}
+	var products, _ = s.store.Product().ProductsSearch(10, 0, filter)
+	fmt.Println(products)
 
-	if err := s.store.Product().Create(product); err != nil {
-		log.Fatal(err)
-	}
-	//s.store.Product().Delete(22)
-	product, _ = s.store.Product().Get(1)
-	fmt.Println(product)
-	fmt.Println(product.Properties)
 	return nil
 }
 

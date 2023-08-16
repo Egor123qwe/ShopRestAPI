@@ -32,7 +32,9 @@ func (r *ProductRep) Create(p *models.Product) error {
 	}
 
 	for _, prop := range *p.Properties {
-		r.CreateProperty(&prop, p.Id)
+		if err := r.CreateProperty(&prop, p.Id); err != nil {
+			return err
+		}
 	}
 	fmt.Println(p.Id)
 
@@ -61,13 +63,12 @@ func (r *ProductRep) Get(id int) (*models.Product, error) {
 	rows, err := r.db.Query(
 		"SELECT properties.id, properties.amount, color.name, sizes.name "+
 			"FROM properties "+
-			"INNER JOIN color ON properties.size_id = color.id "+
-			"INNER JOIN sizes ON properties.color_id = sizes.id "+
+			"INNER JOIN color ON properties.color_id = color.id "+
+			"INNER JOIN sizes ON properties.size_id = sizes.id "+
 			"WHERE properties.product_id = $1;",
 		id,
 	)
 	if err != nil {
-		rows.Close()
 		return nil, err
 	}
 	defer rows.Close()
@@ -90,9 +91,27 @@ func (r *ProductRep) Delete(id int) error {
 	return nil
 }
 
-func (r *ProductRep) Edit(id int) error {
+func (r *ProductRep) Edit(p *models.Product) error {
 
-	//Delete product = id and all properties with product_id = id
+	typeId := r.findAdditionalId("types", p.Types)
+	styleId := r.findAdditionalId("styles", p.Style)
+	seasonId := r.findAdditionalId("season", p.Season)
+	countryId := r.findAdditionalId("country", p.Country)
+
+	if _, err := r.db.Query(
+		"UPDATE products SET name = $1, price = $2, description = $3, print = $4, "+
+			"types_id = $5, style_id = $6, season_id = $7, country_id = $8 "+
+			"WHERE id = $9",
+		p.Name, p.Price, p.Description, p.Print,
+		typeId, styleId, seasonId, countryId, p.Id,
+	); err != nil {
+		return err
+	}
+	for _, props := range *p.Properties {
+		if err := r.EditProperty(&props); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 
