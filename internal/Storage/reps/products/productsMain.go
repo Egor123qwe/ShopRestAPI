@@ -31,8 +31,9 @@ func (r *ProductRep) Create(p *models.Product) error {
 		return err
 	}
 
-	for _, prop := range *p.Properties {
-		if err := r.CreateProperty(&prop, p.Id); err != nil {
+	for _, prop := range p.Properties {
+		prop.ProductId = p.Id
+		if err := r.CreateProperty(&prop); err != nil {
 			return err
 		}
 	}
@@ -43,7 +44,7 @@ func (r *ProductRep) Create(p *models.Product) error {
 
 func (r *ProductRep) Get(id int) (*models.Product, error) {
 	p := &models.Product{}
-	p.Properties = &[]models.Property{}
+	p.Properties = []models.Property{}
 
 	if err := r.db.QueryRow(
 		"SELECT products.id, products.name, products.price, "+
@@ -79,17 +80,15 @@ func (r *ProductRep) Get(id int) (*models.Product, error) {
 		if err != nil {
 			return nil, err
 		}
-		*p.Properties = append(*p.Properties, prop)
+		p.Properties = append(p.Properties, prop)
 	}
 	return p, nil
 
 }
 
-func (r *ProductRep) Delete(id int) error {
-	r.db.QueryRow("DELETE FROM products WHERE id = $1", id)
+func (r *ProductRep) Delete(id int) {
 	r.db.QueryRow("DELETE FROM properties WHERE product_id = $1", id)
-
-	return nil
+	r.db.QueryRow("DELETE FROM products WHERE id = $1", id)
 }
 
 func (r *ProductRep) Edit(p *models.Product) error {
@@ -108,7 +107,7 @@ func (r *ProductRep) Edit(p *models.Product) error {
 	); err != nil {
 		return err
 	}
-	for _, props := range *p.Properties {
+	for _, props := range p.Properties {
 		if err := r.EditProperty(&props); err != nil {
 			return err
 		}

@@ -7,14 +7,14 @@ import (
 	"strings"
 )
 
-func (r *ProductRep) CreateProperty(prop *models.Property, productId int) error {
+func (r *ProductRep) CreateProperty(prop *models.Property) error {
 	colorId := r.findAdditionalId("color", prop.Color)
 	sizesId := r.findAdditionalId("sizes", prop.Size)
 	photosId := 0
 	if err := r.db.QueryRow(
 		"INSERT INTO properties (product_id, color_id, photos_id, size_id, amount) "+
-			"VALUES ($1, $2, $3, $4, $5) RETURNING id",
-		productId, colorId, photosId, sizesId, prop.Amount,
+			"VALUES ($1, $2, $3, $4, $5) RETURNING id;",
+		prop.ProductId, colorId, photosId, sizesId, prop.Amount,
 	).Scan(&prop.Id); err != nil {
 		return err
 	}
@@ -28,7 +28,7 @@ func (r *ProductRep) EditProperty(p *models.Property) error {
 	if _, err := r.db.Query(
 		"UPDATE properties SET color_id = $1, photos_id = $2, size_id = $3, "+
 			"amount = $4 "+
-			"WHERE id = $5",
+			"WHERE id = $5;",
 		colorId, photosId, sizesId, p.Amount, p.Id,
 	); err != nil {
 		return err
@@ -36,12 +36,11 @@ func (r *ProductRep) EditProperty(p *models.Property) error {
 	return nil
 }
 
-func (r *ProductRep) DeleteProperty(id int) error {
-	r.db.QueryRow("DELETE FROM properties WHERE id = $1", id)
-	return nil
+func (r *ProductRep) DeleteProperty(id int) {
+	r.db.QueryRow("DELETE FROM properties WHERE id = $1;", id)
 }
 
-func (r *ProductRep) ProductsSearch(count int, page int, filter *models.ProductFilter) (*[]models.Product, error) {
+func (r *ProductRep) ProductsSearch(filter *models.ProductFilter) ([]models.Product, error) {
 	products := make([]models.Product, 0)
 
 	if filter.MaxPrice == 0 {
@@ -72,8 +71,8 @@ func (r *ProductRep) ProductsSearch(count int, page int, filter *models.ProductF
 		"WHERE (p.price > $3 AND price < $4) "+
 		"AND (LOWER(p.name) LIKE $5) "+additionalParams+
 		"OFFSET $1 LIMIT $2;",
-		page*count,
-		count,
+		filter.Page*filter.Count,
+		filter.Count,
 		filter.MinPrice, filter.MaxPrice,
 		"%"+strings.ToLower(filter.Term)+"%",
 		getConcatStr(filter.Print), getConcatStr(filter.Types),
@@ -96,10 +95,10 @@ func (r *ProductRep) ProductsSearch(count int, page int, filter *models.ProductF
 		products = append(products, p)
 	}
 
-	return &products, nil
+	return products, nil
 }
 
-func (r *ProductRep) GetPropertyList(table string) (*[]string, error) {
+func (r *ProductRep) GetPropertyList(table string) ([]string, error) {
 	pList := make([]string, 0)
 
 	rows, err := r.db.Query(
@@ -115,13 +114,13 @@ func (r *ProductRep) GetPropertyList(table string) (*[]string, error) {
 		pList = append(pList, s)
 	}
 
-	return &pList, nil
+	return pList, nil
 }
 
 func getConcatStr(arr []string) string {
 	var res string
 	for _, s := range arr {
-		res += s
+		res += "," + s + ","
 	}
 	return res
 }
@@ -130,5 +129,5 @@ func getSqlCheck(arr []string, param string, i int) string {
 	if getConcatStr(arr) == "" {
 		return " AND ($" + strconv.Itoa(i) + "=" + "$" + strconv.Itoa(i) + ") "
 	}
-	return " AND ($" + strconv.Itoa(i) + " LIKE CONCAT('%'," + param + ",'%')) "
+	return " AND ($" + strconv.Itoa(i) + " LIKE CONCAT('%,'," + param + ",',%')) "
 }

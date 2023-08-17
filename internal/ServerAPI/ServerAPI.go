@@ -1,20 +1,22 @@
 package ServerAPI
 
 import (
+	"ShopRestAPI/internal/ServerAPI/routes"
 	"ShopRestAPI/internal/Storage"
-	"ShopRestAPI/internal/Storage/models"
-	"fmt"
 	"log"
+	"net/http"
 )
 
 type ServerApi struct {
 	config *Config
+	mux    *http.ServeMux
 	store  *Storage.Store
 }
 
 func New(config *Config) *ServerApi {
 	return &ServerApi{
 		config: config,
+		mux:    http.NewServeMux(),
 		store:  Storage.New(config.store),
 	}
 }
@@ -25,27 +27,9 @@ func (s *ServerApi) Start() error {
 		log.Fatal(err)
 	}
 
-	//s.configureRoutes()
+	routes.ConfigureRoutes(s.mux, s.store)
 
-	//Тест
-	s.store.Product().GetPropertyList("color")
-
-	var filter = &models.ProductFilter{
-		Term:     "",
-		MinPrice: 0,
-		MaxPrice: 0,
-		Print:    []string{""},
-		Types:    []string{},
-		Style:    []string{},
-		Season:   []string{},
-		Country:  []string{},
-		Color:    []string{},
-		Size:     []string{},
-	}
-	var products, _ = s.store.Product().ProductsSearch(10, 0, filter)
-	fmt.Println(products)
-
-	return nil
+	return http.ListenAndServe(s.config.serverPort, s.mux)
 }
 
 func (s *ServerApi) configureStore() error {

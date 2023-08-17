@@ -1,0 +1,67 @@
+package routes
+
+import (
+	"ShopRestAPI/internal/Storage/models"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"strconv"
+)
+
+func (r *Routes) ConfigurePropertiesRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("/props/color", r.CreateColorRouter("color"))
+	mux.HandleFunc("/props/country", r.CreateColorRouter("country"))
+	mux.HandleFunc("/props/sizes", r.CreateColorRouter("sizes"))
+	mux.HandleFunc("/props/styles", r.CreateColorRouter("styles"))
+	mux.HandleFunc("/props/types", r.CreateColorRouter("types"))
+	mux.HandleFunc("/props/season", r.CreateColorRouter("season"))
+	mux.HandleFunc("/property", r.CreatePropertyRouter())
+}
+
+func (r *Routes) CreateColorRouter(table string) http.HandlerFunc {
+	type response struct {
+		Data []string `json:"data"`
+	}
+	return func(w http.ResponseWriter, req *http.Request) {
+		data, err := r.store.Product().GetPropertyList(table)
+		if err != nil {
+			errorHelper(w, req, http.StatusBadRequest, err)
+		}
+		res := &response{
+			Data: data,
+		}
+		info, err := json.Marshal(res)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Fprintf(w, "%s\n", info)
+	}
+}
+
+func (r *Routes) CreatePropertyRouter() http.HandlerFunc {
+	return func(w http.ResponseWriter, req *http.Request) {
+		if req.Method == "DELETE" {
+			param := req.URL.Query().Get("id")
+			id, err := strconv.ParseInt(param, 10, 32)
+			if err != nil {
+				errorHelper(w, req, http.StatusBadRequest, err)
+			}
+			r.store.Product().DeleteProperty(int(id))
+		} else if req.Method == "PUT" {
+			var property = &models.Property{}
+			if err := json.NewDecoder(req.Body).Decode(property); err != nil {
+				log.Fatal(err)
+			}
+			if property.Id == 0 {
+				if err := r.store.Product().CreateProperty(property); err != nil {
+					errorHelper(w, req, http.StatusBadRequest, err)
+				}
+			} else {
+				if err := r.store.Product().EditProperty(property); err != nil {
+					errorHelper(w, req, http.StatusBadRequest, err)
+				}
+			}
+		}
+	}
+}

@@ -1,36 +1,39 @@
 package models
 
 type Product struct {
-	Id          int
-	Name        string
-	Price       float32
-	Description string
-	Photos      string
-	Print       string
-	Types       string
-	Style       string
-	Season      string
-	Country     string
-	Properties  *[]Property
+	Id          int        `json:"id"`
+	Name        string     `json:"name"`
+	Price       float32    `json:"price"`
+	Description string     `json:"description"`
+	Photos      string     `json:"photos"`
+	Print       string     `json:"print"`
+	Types       string     `json:"types"`
+	Style       string     `json:"style"`
+	Season      string     `json:"season"`
+	Country     string     `json:"country"`
+	Properties  []Property `json:"properties"`
 }
 
 type Property struct {
-	Id     int
-	Color  string
-	Photos string
-	Size   string
-	Amount int
+	Id        int    `json:"id"`
+	ProductId int    `json:"productId"`
+	Color     string `json:"color"`
+	Photos    string `json:"photos"`
+	Size      string `json:"size"`
+	Amount    int    `json:"amount"`
 }
 
 type ProductFilter struct {
-	Term     string
-	MinPrice float32
-	MaxPrice float32
-	Print    []string
-	Types    []string
-	Style    []string
-	Season   []string
-	Country  []string
-	Color    []string
-	Size     []string
+	Page     int      `json:"page"`
+	Count    int      `json:"count"`
+	Term     string   `json:"term"`
+	MinPrice float32  `json:"minPrice"`
+	MaxPrice float32  `json:"maxPrice"`
+	Print    []string `json:"print"`
+	Types    []string `json:"types"`
+	Style    []string `json:"style"`
+	Season   []string `json:"season"`
+	Country  []string `json:"country"`
+	Color    []string `json:"color"`
+	Size     []string `json:"size"`
 }
