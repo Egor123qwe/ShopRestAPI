@@ -37,7 +37,6 @@ func (r *Routes) CreateColorRouter(table string) http.HandlerFunc {
 		}
 		fmt.Fprintf(w, "%s\n", info)
 	}
-	
 }
 
 func (r *Routes) CreatePropertyRouter() http.HandlerFunc {
