@@ -2,7 +2,7 @@ package productRouters
 
 import (
 	"ShopRestAPI/internal/models/products"
-	"ShopRestAPI/internal/routers"
+	"ShopRestAPI/internal/routers/helperRoters"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -27,7 +27,7 @@ func (r *ProductRoutes) CreateColorRouter(table string) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		data, err := r.store.Product().GetPropertyList(table)
 		if err != nil {
-			routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+			helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 		}
 		res := &response{
 			Data: data,
@@ -46,7 +46,7 @@ func (r *ProductRoutes) CreatePropertyRouter() http.HandlerFunc {
 			param := req.URL.Query().Get("id")
 			id, err := strconv.ParseInt(param, 10, 32)
 			if err != nil {
-				routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+				helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 			}
 			r.store.Product().DeleteInstance(int(id))
 		} else if req.Method == "PUT" {
@@ -56,11 +56,11 @@ func (r *ProductRoutes) CreatePropertyRouter() http.HandlerFunc {
 			}
 			if property.Id == 0 {
 				if err := r.store.Product().CreateInstance(property); err != nil {
-					routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+					helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 				}
 			} else {
 				if err := r.store.Product().EditInstance(property); err != nil {
-					routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+					helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 				}
 			}
 		}

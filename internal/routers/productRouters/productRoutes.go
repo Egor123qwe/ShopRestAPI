@@ -3,7 +3,7 @@ package productRouters
 import (
 	"ShopRestAPI/internal/Storage"
 	"ShopRestAPI/internal/models/products"
-	"ShopRestAPI/internal/routers"
+	"ShopRestAPI/internal/routers/helperRoters"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -27,12 +27,12 @@ func (r *ProductRoutes) CreateProductRouter() http.HandlerFunc {
 		param := req.URL.Query().Get("id")
 		id, err := strconv.ParseInt(param, 10, 32)
 		if err != nil {
-			routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+			helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 		}
 		if req.Method == "GET" {
 			data, err := r.store.Product().Get(int(id))
 			if err != nil {
-				routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+				helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 			}
 			info, err := json.Marshal(data)
 			fmt.Fprintf(w, "%s\n", info)
@@ -41,16 +41,16 @@ func (r *ProductRoutes) CreateProductRouter() http.HandlerFunc {
 		} else if req.Method == "PUT" {
 			var product = &products.Product{}
 			if err := json.NewDecoder(req.Body).Decode(product); err != nil {
-				routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+				helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 			}
 			if product.Id == 0 {
 				err := r.store.Product().Create(product)
 				if err != nil {
-					routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+					helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 				}
 			} else {
 				if err := r.store.Product().Edit(product); err != nil {
-					routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+					helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 				}
 			}
 		}
@@ -66,12 +66,12 @@ func (r *ProductRoutes) CreateProductFilterRouter() http.HandlerFunc {
 
 		var filter = &products.Filter{}
 		if err := json.NewDecoder(req.Body).Decode(filter); err != nil {
-			routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+			helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 		}
 
 		products, err := r.store.Product().ProductsSearch(filter)
 		if err != nil {
-			routers.ErrorHelper(w, req, http.StatusBadRequest, err)
+			helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
 		}
 		data := response{
 			Data: products,

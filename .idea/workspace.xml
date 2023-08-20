@@ -5,10 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81c16e24-4793-4235-8ba8-02fb57926800" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/Storage/repositories/users/users.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories/users/users.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/routers/usersRouters/userRouters.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/helperRotes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/helperRotes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/productRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/productRoutes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/propertiesRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/propertiesRoutes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/sqlStorage/storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/storage.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/storage.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/routers/helperRoters.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/helperRoters/helperRoters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/routers/productRouters/productRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/productRoutes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/routers/productRouters/propertiesRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/propertiesRoutes.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/routers/roters.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/roters.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,11 +78,11 @@
       <recent name="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/routers/helperRoters" />
       <recent name="$PROJECT_DIR$/internal/routers/productRouters" />
       <recent name="$PROJECT_DIR$/internal" />
       <recent name="$PROJECT_DIR$/internal/Storage" />
       <recent name="$PROJECT_DIR$/internal/Storage/sqlStorage" />
-      <recent name="$PROJECT_DIR$" />
     </key>
   </component>
   <component name="RunManager">

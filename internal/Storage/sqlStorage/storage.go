@@ -3,7 +3,9 @@ package sqlStorage
 import (
 	"ShopRestAPI/internal/Storage"
 	"ShopRestAPI/internal/Storage/repositories/products"
+	"ShopRestAPI/internal/Storage/repositories/users"
 	productRep "ShopRestAPI/internal/Storage/sqlStorage/repositories/products"
+	userRep "ShopRestAPI/internal/Storage/sqlStorage/repositories/users"
 	"database/sql"
 	_ "github.com/lib/pq"
 )
@@ -11,6 +13,7 @@ import (
 type Store struct {
 	db      *sql.DB
 	product products.ProductRepository
+	user    users.UserRepository
 }
 
 func New(db *sql.DB) Storage.Store {
@@ -26,4 +29,13 @@ func (s *Store) Product() products.ProductRepository {
 
 	s.product = productRep.New(s.db)
 	return s.product
+}
+
+func (s *Store) User() users.UserRepository {
+	if s.user != nil {
+		return s.product
+	}
+
+	s.user = userRep.New(s.db)
+	return s.user
 }
