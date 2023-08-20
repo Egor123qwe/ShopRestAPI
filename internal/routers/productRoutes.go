@@ -1,7 +1,7 @@
-package routes
+package routers
 
 import (
-	"ShopRestAPI/internal/Storage/models"
+	"ShopRestAPI/internal/models/products"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -32,7 +32,7 @@ func (r *Routes) CreateProductRouter() http.HandlerFunc {
 		} else if req.Method == "DELETE" {
 			r.store.Product().Delete(int(id))
 		} else if req.Method == "PUT" {
-			var product = &models.Product{}
+			var product = &products.Product{}
 			if err := json.NewDecoder(req.Body).Decode(product); err != nil {
 				errorHelper(w, req, http.StatusBadRequest, err)
 			}
@@ -52,12 +52,12 @@ func (r *Routes) CreateProductRouter() http.HandlerFunc {
 
 func (r *Routes) CreateProductFilterRouter() http.HandlerFunc {
 	type response struct {
-		Data []models.Product `json:"data"`
+		Data []products.Product `json:"data"`
 	}
 
 	return func(w http.ResponseWriter, req *http.Request) {
 
-		var filter = &models.ProductFilter{}
+		var filter = &products.Filter{}
 		if err := json.NewDecoder(req.Body).Decode(filter); err != nil {
 			errorHelper(w, req, http.StatusBadRequest, err)
 		}

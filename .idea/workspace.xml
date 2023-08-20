@@ -5,8 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81c16e24-4793-4235-8ba8-02fb57926800" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories/products/products.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/storage.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/Storage/storage.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ServerAPI/ServerAPI.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/serverAPI/serverAPI.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ServerAPI/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/serverAPI/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ServerAPI/routes/mainRotes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/helperRotes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ServerAPI/routes/productRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRoutes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ServerAPI/routes/propertiesRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/propertiesRoutes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/ServerAPI/routes/rotes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/roters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/Storage.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/config.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/migrations/Products/main/20230813144426_create_products.down.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/main/20230813144426_create_products.down.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/migrations/Products/main/20230813144426_create_products.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/main/20230813144426_create_products.up.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/migrations/Products/properties/20230814092653_create_product_properties.down.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Products/properties/20230814092653_create_product_properties.down.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/migrations/Products/properties/20230814092653_create_product_properties.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Products/properties/20230814092653_create_product_properties.up.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/migrations/Products/props_id/20230814092730_create_props_id.down.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Products/props_id/20230814092730_create_props_id.down.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/migrations/Products/props_id/20230814092730_create_props_id.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Products/props_id/20230814092730_create_props_id.up.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/models/product.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/models/products/product.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/reps.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/reps/products/productsMain.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/repositories/products/products.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/Storage/reps/products/productsProperties.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories/products/productsProperties.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,13 +80,22 @@
     "WebServerToolWindowFactoryState": "false",
     "go.import.settings.migrated": "true",
     "go.sdk.automatically.set": "true",
-    "last_opened_file_path": "/Users/igortryhan"
+    "last_opened_file_path": "/Users/igortryhan/BSUIR/Back-end/Pet_Projects/ShopRestAPI/internal/Storage/sqlStorage/config",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/Storage/sqlStorage/config" />
+      <recent name="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/internal/ServerAPI/routes" />
-      <recent name="$PROJECT_DIR$/internal/ServerAPI/routes/ProductRotes" />
+      <recent name="$PROJECT_DIR$/internal" />
+      <recent name="$PROJECT_DIR$/internal/Storage" />
+      <recent name="$PROJECT_DIR$/internal/Storage/sqlStorage" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/internal/Storage/models/products" />
     </key>
   </component>
   <component name="RunManager">
@@ -96,16 +126,5 @@
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/internal/ServerAPI/routes/mainRotes.go</url>
-          <line>8</line>
-          <option name="timeStamp" value="38" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

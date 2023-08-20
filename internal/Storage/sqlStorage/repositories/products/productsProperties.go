@@ -1,13 +1,13 @@
 package products
 
 import (
-	"ShopRestAPI/internal/Storage/models"
+	models "ShopRestAPI/internal/models/products"
 	"math"
 	"strconv"
 	"strings"
 )
 
-func (r *ProductRep) CreateProperty(prop *models.Property) error {
+func (r *product) CreateInstance(prop *models.Instance) error {
 	colorId := r.findAdditionalId("color", prop.Color)
 	sizesId := r.findAdditionalId("sizes", prop.Size)
 	photosId := 0
@@ -21,7 +21,7 @@ func (r *ProductRep) CreateProperty(prop *models.Property) error {
 	return nil
 }
 
-func (r *ProductRep) EditProperty(p *models.Property) error {
+func (r *product) EditInstance(p *models.Instance) error {
 	colorId := r.findAdditionalId("color", p.Color)
 	sizesId := r.findAdditionalId("sizes", p.Size)
 	photosId := 0
@@ -36,11 +36,11 @@ func (r *ProductRep) EditProperty(p *models.Property) error {
 	return nil
 }
 
-func (r *ProductRep) DeleteProperty(id int) {
+func (r *product) DeleteInstance(id int) {
 	r.db.QueryRow("DELETE FROM properties WHERE id = $1;", id)
 }
 
-func (r *ProductRep) ProductsSearch(filter *models.ProductFilter) ([]models.Product, error) {
+func (r *product) ProductsSearch(filter *models.Filter) ([]models.Product, error) {
 	products := make([]models.Product, 0)
 
 	if filter.MaxPrice == 0 {
@@ -98,8 +98,8 @@ func (r *ProductRep) ProductsSearch(filter *models.ProductFilter) ([]models.Prod
 	return products, nil
 }
 
-func (r *ProductRep) GetPropertyList(table string) ([]string, error) {
-	pList := make([]string, 0)
+func (r *product) GetPropertyList(table string) ([]string, error) {
+	list := make([]string, 0)
 
 	rows, err := r.db.Query(
 		"SELECT (name) FROM " + table,
@@ -111,10 +111,10 @@ func (r *ProductRep) GetPropertyList(table string) ([]string, error) {
 	var s string
 	for rows.Next() {
 		rows.Scan(&s)
-		pList = append(pList, s)
+		list = append(list, s)
 	}
 
-	return pList, nil
+	return list, nil
 }
 
 func getConcatStr(arr []string) string {

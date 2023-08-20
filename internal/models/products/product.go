@@ -1,4 +1,4 @@
-package models
+package products
 
 type Product struct {
 	Id          int        `json:"id"`
@@ -11,10 +11,10 @@ type Product struct {
 	Style       string     `json:"style"`
 	Season      string     `json:"season"`
 	Country     string     `json:"country"`
-	Properties  []Property `json:"properties"`
+	Instances   []Instance `json:"properties"`
 }
 
-type Property struct {
+type Instance struct {
 	Id        int    `json:"id"`
 	ProductId int    `json:"productId"`
 	Color     string `json:"color"`
@@ -23,7 +23,7 @@ type Property struct {
 	Amount    int    `json:"amount"`
 }
 
-type ProductFilter struct {
+type Filter struct {
 	Page     int      `json:"page"`
 	Count    int      `json:"count"`
 	Term     string   `json:"term"`

@@ -1,14 +1,14 @@
-package ServerAPI
+package serverAPI
 
 import (
-	"ShopRestAPI/internal/Storage"
 	"github.com/spf13/viper"
 	"log"
 )
 
 type Config struct {
 	serverPort string
-	store      *Storage.Config
+	dbURL      string
+	dbDriver   string
 }
 
 func NewConfig() *Config {
@@ -20,6 +20,7 @@ func NewConfig() *Config {
 
 	return &Config{
 		serverPort: viper.GetString("server_port"),
-		store:      Storage.NewConfig(),
+		dbURL:      viper.GetString("db_url"),
+		dbDriver:   viper.GetString("db_driver_name"),
 	}
 }

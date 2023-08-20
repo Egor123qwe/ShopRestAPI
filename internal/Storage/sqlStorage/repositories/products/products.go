@@ -1,21 +1,22 @@
 package products
 
 import (
-	"ShopRestAPI/internal/Storage/models"
+	"ShopRestAPI/internal/Storage/repositories/products"
+	models "ShopRestAPI/internal/models/products"
 	"database/sql"
 	"fmt"
 	"log"
 )
 
-type ProductRep struct {
+type product struct {
 	db *sql.DB
 }
 
-func NewProductRep(db *sql.DB) *ProductRep {
-	return &ProductRep{db: db}
+func New(db *sql.DB) products.ProductRepository {
+	return &product{db: db}
 }
 
-func (r *ProductRep) Create(p *models.Product) error {
+func (r *product) Create(p *models.Product) error {
 
 	typeId := r.findAdditionalId("types", p.Types)
 	styleId := r.findAdditionalId("styles", p.Style)
@@ -31,9 +32,9 @@ func (r *ProductRep) Create(p *models.Product) error {
 		return err
 	}
 
-	for _, prop := range p.Properties {
-		prop.ProductId = p.Id
-		if err := r.CreateProperty(&prop); err != nil {
+	for _, inst := range p.Instances {
+		inst.ProductId = p.Id
+		if err := r.CreateInstance(&inst); err != nil {
 			return err
 		}
 	}
@@ -42,9 +43,9 @@ func (r *ProductRep) Create(p *models.Product) error {
 	return nil
 }
 
-func (r *ProductRep) Get(id int) (*models.Product, error) {
+func (r *product) Get(id int) (*models.Product, error) {
 	p := &models.Product{}
-	p.Properties = []models.Property{}
+	p.Instances = []models.Instance{}
 
 	if err := r.db.QueryRow(
 		"SELECT products.id, products.name, products.price, "+
@@ -75,23 +76,22 @@ func (r *ProductRep) Get(id int) (*models.Product, error) {
 
 	defer rows.Close()
 	for rows.Next() {
-		prop := models.Property{}
-		err := rows.Scan(&prop.Id, &prop.Amount, &prop.Color, &prop.Size)
+		inst := models.Instance{}
+		err := rows.Scan(&inst.Id, &inst.Amount, &inst.Color, &inst.Size)
 		if err != nil {
 			return nil, err
 		}
-		p.Properties = append(p.Properties, prop)
+		p.Instances = append(p.Instances, inst)
 	}
 	return p, nil
-
 }
 
-func (r *ProductRep) Delete(id int) {
+func (r *product) Delete(id int) {
 	r.db.QueryRow("DELETE FROM properties WHERE product_id = $1", id)
 	r.db.QueryRow("DELETE FROM products WHERE id = $1", id)
 }
 
-func (r *ProductRep) Edit(p *models.Product) error {
+func (r *product) Edit(p *models.Product) error {
 
 	typeId := r.findAdditionalId("types", p.Types)
 	styleId := r.findAdditionalId("styles", p.Style)
@@ -107,15 +107,15 @@ func (r *ProductRep) Edit(p *models.Product) error {
 	); err != nil {
 		return err
 	}
-	for _, props := range p.Properties {
-		if err := r.EditProperty(&props); err != nil {
+	for _, inst := range p.Instances {
+		if err := r.EditInstance(&inst); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-func (r *ProductRep) findAdditionalId(table string, name string) int {
+func (r *product) findAdditionalId(table string, name string) int {
 	var typeId int
 	if err := r.db.QueryRow(
 		"SELECT id FROM "+table+" WHERE name = $1",

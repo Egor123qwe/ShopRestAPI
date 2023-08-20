@@ -1,7 +1,7 @@
-package routes
+package routers
 
 import (
-	"ShopRestAPI/internal/Storage/models"
+	"ShopRestAPI/internal/models/products"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -47,18 +47,18 @@ func (r *Routes) CreatePropertyRouter() http.HandlerFunc {
 			if err != nil {
 				errorHelper(w, req, http.StatusBadRequest, err)
 			}
-			r.store.Product().DeleteProperty(int(id))
+			r.store.Product().DeleteInstance(int(id))
 		} else if req.Method == "PUT" {
-			var property = &models.Property{}
+			var property = &products.Instance{}
 			if err := json.NewDecoder(req.Body).Decode(property); err != nil {
 				log.Fatal(err)
 			}
 			if property.Id == 0 {
-				if err := r.store.Product().CreateProperty(property); err != nil {
+				if err := r.store.Product().CreateInstance(property); err != nil {
 					errorHelper(w, req, http.StatusBadRequest, err)
 				}
 			} else {
-				if err := r.store.Product().EditProperty(property); err != nil {
+				if err := r.store.Product().EditInstance(property); err != nil {
 					errorHelper(w, req, http.StatusBadRequest, err)
 				}
 			}

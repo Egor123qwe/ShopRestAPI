@@ -1,4 +1,4 @@
-package routes
+package routers
 
 import (
 	"ShopRestAPI/internal/Storage"
@@ -6,10 +6,10 @@ import (
 )
 
 type Routes struct {
-	store *Storage.Store
+	store Storage.Store
 }
 
-func ConfigureRoutes(mux *http.ServeMux, store *Storage.Store) {
+func ConfigureRoutes(mux *http.ServeMux, store Storage.Store) {
 	r := Routes{store: store}
 	r.ConfigureProductRoutes(mux)
 }
