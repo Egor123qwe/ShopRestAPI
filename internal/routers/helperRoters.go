@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func errorHelper(w http.ResponseWriter, r *http.Request, code int, err error) {
+func ErrorHelper(w http.ResponseWriter, r *http.Request, code int, err error) {
 	respond(w, r, code, map[string]string{"error": err.Error()})
 }
 

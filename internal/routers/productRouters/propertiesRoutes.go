@@ -1,7 +1,8 @@
-package routers
+package productRouters
 
 import (
 	"ShopRestAPI/internal/models/products"
+	"ShopRestAPI/internal/routers"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -9,7 +10,7 @@ import (
 	"strconv"
 )
 
-func (r *Routes) ConfigurePropertiesRoutes(mux *http.ServeMux) {
+func (r *ProductRoutes) ConfigurePropertiesRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/props/color", r.CreateColorRouter("color"))
 	mux.HandleFunc("/props/country", r.CreateColorRouter("country"))
 	mux.HandleFunc("/props/sizes", r.CreateColorRouter("sizes"))
@@ -19,14 +20,14 @@ func (r *Routes) ConfigurePropertiesRoutes(mux *http.ServeMux) {
 	mux.HandleFunc("/property", r.CreatePropertyRouter())
 }
 
-func (r *Routes) CreateColorRouter(table string) http.HandlerFunc {
+func (r *ProductRoutes) CreateColorRouter(table string) http.HandlerFunc {
 	type response struct {
 		Data []string `json:"data"`
 	}
 	return func(w http.ResponseWriter, req *http.Request) {
 		data, err := r.store.Product().GetPropertyList(table)
 		if err != nil {
-			errorHelper(w, req, http.StatusBadRequest, err)
+			routers.ErrorHelper(w, req, http.StatusBadRequest, err)
 		}
 		res := &response{
 			Data: data,
@@ -39,13 +40,13 @@ func (r *Routes) CreateColorRouter(table string) http.HandlerFunc {
 	}
 }
 
-func (r *Routes) CreatePropertyRouter() http.HandlerFunc {
+func (r *ProductRoutes) CreatePropertyRouter() http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		if req.Method == "DELETE" {
 			param := req.URL.Query().Get("id")
 			id, err := strconv.ParseInt(param, 10, 32)
 			if err != nil {
-				errorHelper(w, req, http.StatusBadRequest, err)
+				routers.ErrorHelper(w, req, http.StatusBadRequest, err)
 			}
 			r.store.Product().DeleteInstance(int(id))
 		} else if req.Method == "PUT" {
@@ -55,11 +56,11 @@ func (r *Routes) CreatePropertyRouter() http.HandlerFunc {
 			}
 			if property.Id == 0 {
 				if err := r.store.Product().CreateInstance(property); err != nil {
-					errorHelper(w, req, http.StatusBadRequest, err)
+					routers.ErrorHelper(w, req, http.StatusBadRequest, err)
 				}
 			} else {
 				if err := r.store.Product().EditInstance(property); err != nil {
-					errorHelper(w, req, http.StatusBadRequest, err)
+					routers.ErrorHelper(w, req, http.StatusBadRequest, err)
 				}
 			}
 		}
