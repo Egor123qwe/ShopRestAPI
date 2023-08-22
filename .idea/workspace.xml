@@ -5,16 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81c16e24-4793-4235-8ba8-02fb57926800" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/Storage/repositories/users/users.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories/users/users.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/internal/routers/usersRouters/userRouters.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/models/uesrs/users.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/Users/user_down.sql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/migrations/Users/user_up.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/Storage/sqlStorage/storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/storage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/Storage/storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/storage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/helperRoters.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/helperRoters/helperRoters.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/productRouters/productRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/productRoutes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/productRouters/propertiesRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/propertiesRoutes.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/roters.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/roters.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
