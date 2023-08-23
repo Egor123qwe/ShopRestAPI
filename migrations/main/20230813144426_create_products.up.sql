@@ -61,3 +61,11 @@ CREATE TABLE properties
     FOREIGN KEY(size_id) REFERENCES sizes(id),
     amount INTEGER NOT NULL
 );
+
+CREATE TABLE users
+(
+    id SERIAL PRIMARY KEY,
+    email varchar NOT NULL unique,
+    password varchar NOT NULL,
+    role INTEGER NOT NULL
+);

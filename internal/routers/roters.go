@@ -1,13 +1,12 @@
 package routers
 
 import (
-	"ShopRestAPI/internal/Storage"
 	"ShopRestAPI/internal/routers/productRouters"
 	"ShopRestAPI/internal/routers/usersRouters"
-	"net/http"
+	"ShopRestAPI/internal/server"
 )
 
-func ConfigureRoutes(mux *http.ServeMux, store Storage.Store) {
-	productRouters.ConfigureProductRoutes(mux, store)
-	usersRouters.ConfigureUsersRoutes(mux, store)
+func ConfigureRoutes(s *server.ServerApi) {
+	productRouters.ConfigureProductRoutes(s.Router, s.Store)
+	usersRouters.ConfigureUsersRoutes(s.Router, s.Store, s.SessionStore)
 }

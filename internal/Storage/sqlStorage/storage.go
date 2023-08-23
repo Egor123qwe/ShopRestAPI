@@ -33,7 +33,7 @@ func (s *Store) Product() products.ProductRepository {
 
 func (s *Store) User() users.UserRepository {
 	if s.user != nil {
-		return s.product
+		return s.user
 	}
 
 	s.user = userRep.New(s.db)
