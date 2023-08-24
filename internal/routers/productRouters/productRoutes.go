@@ -4,6 +4,7 @@ import (
 	"ShopRestAPI/internal/Storage"
 	"ShopRestAPI/internal/models/products"
 	"ShopRestAPI/internal/routers/helperRoters"
+	"ShopRestAPI/internal/server"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -15,14 +16,14 @@ type ProductRoutes struct {
 	store Storage.Store
 }
 
-func ConfigureProductRoutes(mux *http.ServeMux, store Storage.Store) {
-	r := ProductRoutes{store: store}
-	r.ConfigurePropertiesRoutes(mux)
-	mux.HandleFunc("/product", r.CreateProductRouter())
-	mux.HandleFunc("/products", r.CreateProductFilterRouter())
+func ConfigureProductRoutes(s *server.Server) {
+	r := ProductRoutes{store: s.Store}
+	r.ConfigurePropertiesRoutes(s)
+	s.Router.HandleFunc("/product", r.CreateProductRouter(s))
+	s.Router.HandleFunc("/products", r.CreateProductFilterRouter())
 }
 
-func (r *ProductRoutes) CreateProductRouter() http.HandlerFunc {
+func (r *ProductRoutes) CreateProductRouter(s *server.Server) http.HandlerFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		param := req.URL.Query().Get("id")
 		id, err := strconv.ParseInt(param, 10, 32)
@@ -37,8 +38,16 @@ func (r *ProductRoutes) CreateProductRouter() http.HandlerFunc {
 			info, err := json.Marshal(data)
 			fmt.Fprintf(w, "%s\n", info)
 		} else if req.Method == "DELETE" {
+			if err := s.AuthUser(w, req); err != nil {
+				helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
+				return
+			}
 			r.store.Product().Delete(int(id))
 		} else if req.Method == "PUT" {
+			if err := s.AuthUser(w, req); err != nil {
+				helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)
+				return
+			}
 			var product = &products.Product{}
 			if err := json.NewDecoder(req.Body).Decode(product); err != nil {
 				helperRoters.ErrorHelper(w, req, http.StatusBadRequest, err)

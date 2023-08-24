@@ -1,17 +1,15 @@
 package main
 
 import (
-	"ShopRestAPI/internal/server"
 	"ShopRestAPI/internal/server/ServerApi"
 	"log"
 )
 
 func main() {
 
-	config := server.NewConfig()
-	s := ServerApi.New(config)
+	config := ServerApi.NewConfig()
 
-	if err := s.Start(); err != nil {
+	if err := ServerApi.Start(config); err != nil {
 		log.Fatal(err)
 	}
 }

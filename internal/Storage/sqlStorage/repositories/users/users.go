@@ -35,3 +35,13 @@ func (r *user) FindByEmail(email string) (*model.Users, error) {
 	}
 	return u, nil
 }
+
+func (r *user) Find(id int) (*model.Users, error) {
+	u := &model.Users{}
+	if err := r.db.QueryRow(
+		"SELECT id, email, password, role FROM users WHERE id = $1", id,
+	).Scan(&u.Id, &u.Email, &u.EncryptedPassword, &u.Role); err != nil {
+		return nil, err
+	}
+	return u, nil
+}

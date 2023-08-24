@@ -5,24 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81c16e24-4793-4235-8ba8-02fb57926800" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/server/server.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmd/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/main_config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/configs/main_config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/Storage/repositories/users/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/repositories/users/users.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories/users/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories/users/users.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/Storage/sqlStorage/storage.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/Storage/sqlStorage/storage.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/models/uesrs/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/models/users/users.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/routers/productRouters/productRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/productRoutes.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/routers/productRouters/propertiesRoutes.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/productRouters/propertiesRoutes.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/routers/roters.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/roters.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/routers/usersRouters/userRouters.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/routers/usersRouters/userRouters.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/serverAPI/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/serverAPI/serverAPI.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/ServerApi/serverAPI.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Users/user_down.sql.go" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Users/user_down.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/Users/user_up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/Users/user_up.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/main/20230813144426_create_products.down.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/main/20230813144426_create_products.down.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/migrations/main/20230813144426_create_products.up.sql" beforeDir="false" afterPath="$PROJECT_DIR$/migrations/main/20230813144426_create_products.up.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server/ServerApi/serverAPI.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/ServerApi/serverAPI.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server/config.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/ServerApi/config.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/server/server.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,8 +84,8 @@
       <recent name="$PROJECT_DIR$/internal/Storage/sqlStorage/repositories" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/internal/server" />
       <recent name="$PROJECT_DIR$/internal/server/ServerApi" />
+      <recent name="$PROJECT_DIR$/internal/server" />
       <recent name="$PROJECT_DIR$/internal/routers/helperRoters" />
       <recent name="$PROJECT_DIR$/internal/routers/productRouters" />
       <recent name="$PROJECT_DIR$/internal" />

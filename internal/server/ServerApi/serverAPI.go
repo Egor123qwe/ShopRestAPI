@@ -1,6 +1,7 @@
 package ServerApi
 
 import (
+	"ShopRestAPI/internal/Storage"
 	"ShopRestAPI/internal/Storage/sqlStorage"
 	"ShopRestAPI/internal/routers"
 	"ShopRestAPI/internal/server"
@@ -10,33 +11,28 @@ import (
 	"net/http"
 )
 
-func New(config *server.Config) *server.ServerApi {
-	return &server.ServerApi{
-		config:       config,
-		Router:       http.NewServeMux(),
-		SessionStore: sessions.NewCookieStore([]byte(config.sessionKey)),
-	}
-}
+func Start(config *config) error {
 
-func (s *server.ServerApi) Start() error {
-
-	if err := s.configureStore(); err != nil {
+	storage, err := configureStore(config.dbDriver, config.dbURL)
+	if err != nil {
 		log.Fatal(err)
 	}
+	sessionsStore := sessions.NewCookieStore([]byte(config.sessionKey))
+
+	s := server.NewServer(storage, sessionsStore)
 	routers.ConfigureRoutes(s)
 
-	return http.ListenAndServe(s.config.serverPort, s.Router)
+	return http.ListenAndServe(config.serverPort, s.Router)
 }
 
-func (s *server.ServerApi) configureStore() error {
-	db, err := sql.Open(s.config.dbDriver, s.config.dbURL)
+func configureStore(dbDriver string, dbURL string) (Storage.Store, error) {
+	db, err := sql.Open(dbDriver, dbURL)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := db.Ping(); err != nil {
-		return err
+		return nil, err
 	}
 
-	s.Store = sqlStorage.New(db)
-	return nil
+	return sqlStorage.New(db), nil
 }
